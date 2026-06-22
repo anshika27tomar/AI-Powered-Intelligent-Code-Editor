@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CodeMind Pro | Enterprise AI Workspace</title>
+    <link rel="stylesheet" href="app.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- MONACO EDITOR ENGINE (Industry Standard) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
+</head>
+<body>
+    
+    <!-- 1. THE BEAUTIFUL WORKSPACE SHELL (KODIR Style) -->
+    <div class="app-shell" id="mainAppShell">
+        <aside class="sidebar">
+            <div class="sidebar-brand"><i class="ph ph-ghost"></i> <span>CodeMind</span></div>
+            <nav class="side-nav">
+                <div class="nav-item active" onclick="switchView('workspace', this)"><i class="ph ph-briefcase"></i> <span>Workspace</span></div>
+                <div class="nav-item" onclick="switchView('dashboard', this)"><i class="ph ph-chart-pie-slice"></i> <span>Dashboard</span></div>
+                <div class="nav-item" onclick="switchView('reports', this)"><i class="ph ph-file-text"></i> <span>Reports</span></div>
+                
+                                <div class="nav-item" onclick="switchView('settings', this)"><i class="ph ph-gear"></i> <span>Settings</span></div>
+            </nav>
+            <div class="logout-btn" onclick="location.href='index.html'"><i class="ph ph-sign-out"></i> Logout</div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+               <!--- <button id="toggleSidebar" class="toggle-btn">⮜</button>-->
+               <div class="left-header">
+                <button class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="ph ph-list"></i>
+                </button> 
+                    
+                <div class="breadcrumb">Workspace / <span id="view-title">Home</span></div>
+            </div>
+               <!---<div class="user-pill"><span>Anshika </span><div class="avatar">A</div></div>-->
+               <div class="user-pill">
+    <!-- We leave the span empty or use a placeholder, but add an ID -->
+    <span id="user-display-name">Loading...</span>
+    <div class="avatar" id="user-avatar">?</div>
+</div>
+                
+            </header>
+
+            <div class="view-container">
+                <!-- HUB VIEW -->
+                <section id="workspace-view" class="view active">
+                    <div class="hub-center">
+                        <i class="ph ph-code-block hub-icon"></i>
+                        <h2>Project Hub</h2>
+                        <p>Launch your professional AI development environment.</p>
+                        <div class="hub-grid">
+                            <div class="hub-card" onclick="launchProIDE()">
+                                <i class="ph ph-plus-square"></i>
+                                <h3>Start Project</h3>
+                                <span>Open Monaco AI Editor</span>
+                            </div>
+                            <div class="hub-card disabled"><i class="ph ph-github-logo"></i><h3>Import Code</h3><span>Sync GitHub</span></div>
+                        </div>
+                    </div>
+                </section>
+               
+                       <section id="dashboard-view"class="view">
+<div class="dashboard-scroll-wrapper">
+    <div class="dash-content-padding">
+        
+        <!-- Header Section -->
+        <div class="dash-intro">
+            <h2 class="neon-text-green">System <span class="white-text">Intelligence</span></h2>
+            <p class="dim-text">Global statistics across all AI coding sessions.</p>
+        </div>
+
+        <!-- STATS ROW (Aggregated Data) -->
+        <div class="metrics-grid">
+            <div class="glass-card stat">
+                <div class="m-icon green"><i class="ph ph-terminal-window"></i></div>
+                <div class="m-data">
+                    <span class="label">Total Programs Run</span>
+                    <h3 id="total-programs">0</h3>
+                </div>
+            </div>
+            <div class="glass-card stat">
+                <div class="m-icon purple"><i class="ph ph-magic-wand"></i></div>
+                <div class="m-data">
+                    <span class="label">AI Optimizations</span>
+                    <h3 id="total-opts">10</h3>
+                </div>
+            </div>
+            <div class="glass-card stat">
+                <div class="m-icon blue"><i class="ph ph-check-circle"></i></div>
+                <div class="m-data">
+                    <span class="label">Overall Accuracy</span>
+                    <h3 id="global-accuracy">0%</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHARTS GRID (Prevents 'Going Down' bug) -->
+        <div class="dash-charts-row">
+            <div class="glass-card chart-item">
+                <p class="box-label">PRODUCTIVITY TREND</p>
+                <div class="canvas-box">
+                    <canvas id="productivityChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card chart-item">
+                <p class="box-label">LANGUAGE DISTRIBUTION</p>
+                <div class="canvas-box">
+                    <canvas id="languageChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SYSTEM ACTIVITY FEED -->
+        <div class="glass-card full-row">
+            <p class="box-label">RECENT SYSTEM ACTIVITY</p>
+            <div class="activity-log" id="dashboard-activity">
+                <div class="log-line"><span class="log-time">10:45 AM</span> AI: Code analysis completed for Main.java.</div>
+                <div class="log-line"><span class="log-time">Yesterday</span> User: Initialized project 'CodeMind-Enterprise'.</div>
+            </div>
+        </div>
+
+        <!-- Bottom padding for scroll clarity -->
+        <div style="height: 40px; width: 100%;"></div>
+    </div>
+</div>
+</section>
+                
+             
+                            
+               
+                         
+             
+             <section id="reports-view"class="view">
+    <div class="report-scroll-wrapper">
+        <div class="report-inner-content">
+            
+            <!-- FIXED HEADER: Title on left, Buttons on right -->
+            <div class="report-header-flex">
+                <div class="report-header-text">
+                    <h2 class="report-neon-text">Analysis <span class="white-text">Report</span></h2>
+                    <p class="report-status-msg"><span class="report-pulse-dot"></span> Session Intelligence: Active Review</p>
+                </div>
+                <div class="report-header-btns">
+                    <button class="report-btn-outline" id="reportExportBtn">Export Report</button>
+                    <button class="report-btn-primary" id="reportRefreshBtn">Refresh Analysis</button>
+                </div>
+            </div>
+
+            <!-- STAT CARDS -->
+            <div class="report-stats-row">
+                <div class="report-glass-card report-stat-item">
+                    <div class="report-icon purple"><i class="ph ph-shield-check"></i></div>
+                    <div class="report-info">
+                        <span class="report-label">Security Score</span>
+                        <h3 id="report-security-val">0%</h3>
+                    </div>
+                </div>
+                <div class="report-glass-card report-stat-item">
+                    <div class="report-icon green"><i class="ph ph-bug"></i></div>
+                    <div class="report-info">
+                        <span class="report-label">Bugs Found</span>
+                        <h3 id="report-bugs-val">0</h3>
+                    </div>
+                </div>
+                <div class="report-glass-card report-stat-item">
+                    <div class="report-icon blue"><i class="ph ph-lightning"></i></div>
+                    <div class="stat-info">
+                        <span class="report-label">AI Latency</span>
+                        <h3 id="report-latency-val">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DATA GRID (ALIGNED HORIZONTALLY) -->
+            <div class="report-data-grid">
+                <div class="report-glass-card">
+                    <p class="report-box-label">CODE STRUCTURE ANALYSIS</p>
+                    <div class="report-canvas-wrapper">
+                        <canvas id="reportRadarChart"></canvas>
+                    </div>
+                </div>
+                <div class="report-glass-card">
+                    <p class="report-box-label">INTELLIGENCE TRAINING LOAD</p>
+                    <div class="report-canvas-wrapper">
+                        <canvas id="reportLineChart"></canvas>
+                    </div>
+                </div>
+                <div class="report-glass-card">
+                    <p class="report-box-label">LIVE TEST FEED</p>
+                    <div id="report-logs-stream" class="report-log-stream">
+                        <!-- Initial logs will be injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toast for Report Section -->
+            <div id="report-toast" class="report-toast-popup">Generating PDF Report...</div>
+
+            <div style="height: 50px;"></div>
+        </div>
+    </div>
+</section>
+               
+  
+
+    
+
+   
+
+<!-- FRESH SETTINGS SECTION -->
+<section id="settings-view" class="view">
+    <div class="settings-scroll-wrapper">
+        <div class="settings-inner-content">
+            
+            <!-- HEADER -->
+            <div class="settings-header-flex">
+                <div class="settings-header-text">
+                    <h2 class="settings-neon-text">Profile <span class="white-text">Settings</span></h2>
+                    <p class="settings-status-msg">Configure your AI workspace and account preferences.</p>
+                </div>
+                <div class="settings-header-btns">
+                    <button class="settings-btn-outline" onclick="window.resetSettings()">Reset to Default</button>
+                    <button class="settings-btn-primary" id="saveSettingsBtn" onclick="window.saveSettings()">Save Changes</button>
+                </div>
+            </div>
+
+            <!-- SETTINGS GRID -->
+            <div class="settings-main-grid">
+                
+                <!-- 1. USER PROFILE CARD -->
+                <div class="settings-glass-card profile-card">
+                    <p class="settings-box-label">USER PROFILE</p>
+                    <div class="profile-layout">
+                        <div id="settings-avatar-big"></div>
+                        <div class="form-group">
+                            <label>Display Name</label>
+                            <input type="text" value="Anshika Student" id="set-name">
+                        </div>
+                        <div class="form-group">
+                            <label>Primary Language</label>
+                            <select id="set-lang">
+                                <option>Java (Enterprise)</option>
+                                <option>Python (AI/ML)</option>
+                                <option>C++ (Systems)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. AI ENGINE CONFIGURATION -->
+                <div class="settings-glass-card ai-config">
+                    <p class="settings-box-label">AI ENGINE CONFIGURATION</p>
+                    <div class="toggle-group">
+                        <div class="toggle-item">
+                            <span>Real-time Bug Detection</span>
+                            <input type="checkbox" checked>
+                        </div>
+                        <div class="toggle-item">
+                            <span>Automatic Code Optimization</span>
+                            <input type="checkbox" checked>
+                        </div>
+                        <div class="toggle-item">
+                            <span>Deep Logic Scan (Beta)</span>
+                            <input type="checkbox">
+                        </div>
+                    </div>
+                    <div class="slider-group">
+                        <label>AI Scanning Sensitivity: <span id="sens-val">85%</span></label>
+                        <input type="range" id="set-ai-sensitivity" min="0" max="100" value="85" class="neon-slider">
+                    </div>
+                </div>
+
+                <!-- 3. IDE PREFERENCES -->
+                <div class="settings-glass-card ide-prefs">
+                    <p class="settings-box-label">IDE PREFERENCES</p>
+                    <div class="pref-grid">
+                        <div class="form-group">
+                            <label>Theme Variant</label>
+                              <!-- Added a real selector to match your DB column 'theme_pref' -->
+            <select id="set-theme-pref" class="settings-input">
+                <option value="dark">Emerald Dark (Default)</option>
+                <option value="light">Arctic Light</option>
+                <option value="midnight">Midnight Purple</option>
+            </select>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label>Font Size</label>
+                            <input type="number" id="set-font-size" value="14" class="settings-input">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Toast for Settings -->
+            <div id="settings-toast" class="settings-toast-popup">Settings updated successfully!</div>
+<!-- PROFESSIONAL CUSTOM MODAL -->
+<div id="resetModal" class="custom-modal-overlay">
+    <div class="custom-modal-card">
+        <div class="modal-icon"><i class="ph ph-warning-octagon"></i></div>
+        <h3>Confirm Reset</h3>
+        <p>Are you sure you want to revert to default settings? This will clear your current preferences.</p>
+        <div class="modal-actions">
+            <button class="modal-btn cancel" onclick="closeResetModal()">Keep Current</button>
+            <button class="modal-btn confirm" onclick="executeReset()">Yes, Reset</button>
+        </div>
+    </div>
+</div>
+            <div style="height: 60px;"></div>
+        </div>
+    </div>
+</section>
+
+    <!-- 2. THE MONACO ENTERPRISE IDE OVERLAY -->
+    <div id="ideOverlay" class="ide-fullscreen" style="display:none;">
+       
+        <div class="ide-top-menu">
+<!-- NEW FILE INPUT BAR -->
+<div id="newFileBar" class="new-file-bar">
+    <input type="text" id="newFileInput" placeholder="Enter file name..." />
+    <button onclick="confirmNewFile();return false;">Create</button>
+    <button onclick="closeNewFileBar()">Cancel</button>
+</div>
+
+            <!-- HOME BUTTON (already added earlier) -->
+            <div class="home-btn" onclick="goHome()" title="Back to Workspace">
+                <i class="ph ph-house"></i>
+            </div>
+        
+            <!-- MENU ITEMS -->
+            <div class="menu-items">
+        
+                <!-- FILE -->
+                <div class="m-btn" onclick="toggleIDEDrop('fileM')">File
+                    <div id="fileM" class="ide-drop">
+                        <a onclick="newFile()">New File</a>
+                        <a onclick="openFile()">Open File</a>
+                        <a onclick="saveFile()">Save File</a>
+                        <hr>
+                        <a onclick="exitIDE()">Exit</a>
+                    </div>
+                </div>
+        
+                <!-- EDIT -->
+                <div class="m-btn" onclick="toggleIDEDrop('editM')">Edit
+                    <div id="editM" class="ide-drop">
+                        <a onclick="editorCmd('undo')">Undo</a>
+                        <a onclick="editorCmd('redo')">Redo</a>
+                        <a onclick="editorCmd('selectAll')">Select All</a>
+                    </div>
+                </div>
+        
+                <!-- SELECTION -->
+                <div class="m-btn" onclick="toggleIDEDrop('selectM')">Selection
+                    <div id="selectM" class="ide-drop">
+                        <a onclick="editorCmd('selectAll')">Select All</a>
+                    </div>
+                </div>
+        
+                <!-- VIEW -->
+                <div class="m-btn" onclick="toggleIDEDrop('viewM')">View
+                    <div id="viewM" class="ide-drop">
+                        <a onclick="alert('Toggle Sidebar')">Toggle Sidebar</a>
+                        <a onclick="alert('Zoom In')">Zoom In</a>
+                        <a onclick="alert('Zoom Out')">Zoom Out</a>
+                    </div>
+                </div>
+        
+                <!-- GO -->
+                <div class="m-btn" onclick="toggleIDEDrop('goM')">Go
+                    <div id="goM" class="ide-drop">
+                        <a onclick="alert('Go to Line')">Go to Line</a>
+                    </div>
+                </div>
+        
+                <!-- RUN -->
+                <div class="m-btn" onclick="toggleIDEDrop('runM')">Run
+                    <div id="runM" class="ide-drop">
+                        <a onclick="runCode()">Run Code</a>
+                    </div>
+                </div>
+
+        
+            </div>
+        
+            
+        </div>
+       
+        <div class="ide-body">
+            <!-- RIGHT CLICK CONTEXT MENU -->
+
+            <!-- Panel 1: Activity Bar (Left Icons) -->
+            <aside class="ide-activity-bar">
+                <div class="top-set">
+                    <i class="ph ph-files active"></i>
+                    <i class="ph ph-git-branch" onclick="showToast('Source control coming soon')"></i>
+                    <i class="ph ph-bug" onclick="showToast('Debugging module coming soon')"></i>
+                </div>
+              
+                <div class="bottom-set">
+
+                    <!-- ACCOUNT -->
+                    <div class="popup-wrapper">
+                        <i class="ph ph-user-circle" title="Account" onclick="togglePopup('accountPopup')"></i>
+                        <div id="accountPopup" class="popup-menu">
+                          
+                            <p><strong>User:</strong> Anshika Student</p>
+                            <p><strong>Role:</strong> Developer</p>
+                            <p><strong>Plan:</strong> Free / Student</p>
+                            <p><strong>Status:</strong> Active</p>
+                            <p style="opacity:0.6;">Cloud sync coming soon</p>    
+                        </div>
+                    </div>
+                
+                    <!-- SETTINGS -->
+                    <div class="popup-wrapper">
+                        <i class="ph ph-gear" title="Settings" onclick="togglePopup('settingsPopup')"></i>
+                        <div id="settingsPopup" class="popup-menu">
+                            <!--<p>Editor Settings</p>
+                            <p>Theme</p>
+                            <p>Shortcuts</p>-->
+                            <p><strong>Theme:</strong> Dark Mode</p>
+<p><strong>Font Size:</strong> 14px</p>
+<p><strong>Language:</strong> Java / Python</p>
+<p><strong>Auto Save:</strong> Enabled</p>
+<p style="opacity:0.6;">Advanced settings coming soon</p>
+                        </div>
+                    </div>
+                
+                </div>
+            </aside>
+
+            <!-- Panel 2: Explorer, Outline, Timeline -->
+            <aside class="ide-sidebar-nav">
+                <div class="side-item-group">
+                    <p class="panel-label">EXPLORER</p>
+                    <div id="fileTree" class="file-list"></div>
+                </div>
+                
+                <div>
+                <div class="side-item-group">
+                    <p class="panel-label toggle-header" onclick="toggleSection('outlineSection')">
+                        ▶ OUTLINE
+                    </p>
+                    <div id="outlineSection" class="section-content">
+                        <div id="outlineList"></div>
+                    </div>
+                </div>
+                
+                <div class="side-item-group">
+                    <p class="panel-label toggle-header" onclick="toggleSection('timelineSection')">
+                        ▶ TIMELINE
+                    </p>
+                    <div id="timelineSection" class="section-content">
+                        <div id="timelineList"></div>
+                    </div>
+                </div>
+                </div>
+            </aside>
+
+            <!-- Panel 3: Center (Monaco + Terminal) -->
+            <main class="ide-center-panel">
+                <div class="ide-tabs">
+                    <div class="tab-item active" id="tabName">Main.java</div>
+                    <div class="actions">
+                        <!--<select id="langSelect" onchange="changeLang(this.value)">
+                            <option value="java">Java</option><option value="python">Python</option>
+                        </select>-->
+                        <select id="langSelect" onchange="changeLang(this.value)">
+                            <option value="java">Java</option>
+                            <option value="python">Python</option>
+                            <option value="cpp">C++</option>
+                            <option value="javascript">JavaScript</option>
+                        </select>
+                        <button class="btn-execute" onclick="window.runCode()">Run<i class="ph ph-play"></i></button>
+                    </div>
+                </div>
+                <!-- MONACO CONTAINER -->
+                <div id="monaco-container" style="flex:1;"></div>
+                <!-- TERMINAL -->
+                <div class="ide-terminal">
+                    <div class="t-tabs">
+                        <span class="tab-btn active" onclick="switchTerminalTab('terminal')">TERMINAL</span>
+                        <span class="tab-btn" onclick="switchTerminalTab('output')">OUTPUT</span>
+                    </div>
+                    
+                    <div id="terminalLog" class="t-body">user@codemind:~$ ready...</div>
+                    <div id="outputLog" class="t-body" style="display:none;">No output yet...</div>    
+                    <!--<div id="terminalLog" class="t-body">user@codemind:~$ ready for input...</div>-->
+                     <div id="input-prompt" style="display:none; padding: 10px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--border); align-items:center;">
+    <span style="color:var(--accent); font-family:monospace; margin-right:10px;">STDIN ></span>
+    <input type="text" id="terminal-stdin" 
+           style="background:transparent; border:none; color:#fff; outline:none; width:80%; font-family:monospace;" 
+           placeholder="Enter values (separated by space if multiple)...">
+</div>
+                </div>
+
+            </main>
+
+           
+            <aside class="ide-ai">
+    <div class="panel-label">AI INTELLIGENCE <span class="dot"></span></div>
+    
+    <!-- Section 1: Real-time Code Suggestion -->
+    <div class="ai-suggestion-box">
+        <p class="small-label">PRO-TIP SUGGESTION</p>
+        <div id="aiSuggestionText" class="ai-msg-bubble">
+            Start typing to see AI code completions...
+        </div>
+    </div>
+
+    <!-- Section 2: Error Analysis -->
+    <div class="ai-analysis-box">
+        <p class="small-label">LOGIC ANALYSIS</p>
+        <div id="aiErrorLog" class="ai-msg-bubble warning">
+            No issues detected in current stream.
+        </div>
+    </div>
+</aside>
+        </div>
+        
+       
+    </div>
+
+    <script src="app.js"></script>
+    
+        
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeMind | AI Coding Assistant for Beginners</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+    <div id="toast-container"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="ph ph-code-block"></i> <span>CodeMind</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="javascript:void(0)"onclick="switchView('features',this)">Features</a></li>
+                <li><a href="javascript:void(0)"onclick="switchView('faq',this)">FAQs</a></li>
+                <!-- Resources opens the Docs in a new window -->
+               <!----<li><a href="docs.html" target="_blank">Docs</a></li>-->
+               <li><a href="javascript:void(0)" onclick="enterDocView('docs.html', 'Documentation')">Docs</a></li>
+           <li><a href="javascript:void(0)"onclick="switchView('playground',this)">Frontend Lab(Free Access)</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="btn-primary" onclick="openModal('login')">Get Started</button>
+                <div class="menu-icon" onclick="toggleMenu()">
+                    <i class="ph ph-list"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+<!-- THE FRONTEND WORLD CONTAINER -->
+<section id="playground-view" class="view" style="display: none;">
+    <div style="height: 100vh; width: 100%; padding-top: 80px; background: #000000;">
+        <!-- Loading your friend's code inside an Iframe to keep it separate -->
+        <iframe src="playground.html" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+</section>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <p class="tagline">EASY CODING. BETTER RESULTS.</p>
+            <h1>AI-Powered <span class="highlight">Intelligence</span><br>for Beginners</h1>
+            <p class="subtitle">The simplest coding platform designed for students. Detect bugs and learn logic in real-time with our AI assistant.</p>
+            <div class="hero-image">
+                <img src="ai.jpg" alt="AI Dashboard" onerror="this.src='https://via.placeholder.com/1000x500/111/fff?text=CodeMind+Dashboard'">
+            </div>
+        </div>
+    </section>
+
+            
+
+    <!-- 1. Features Section (Now with 5 Cards) -->
+    <section class="features" id="features">
+      <div class="container">
+          <div class="section-header">
+              <h2>The best way to build software</h2>
+              <p>Five powerful tools designed to help you graduate with a world-class project.</p>
+          </div>
+          <div class="slider-wrapper">
+              <button class="slider-btn prev" onclick="moveSlide(-1)"><i class="ph ph-caret-left"></i></button>
+              <div class="slider-container">
+                  <div class="slider-track" id="sliderTrack">
+                      <div class="feature-card">
+                          <i class="ph ph-lightbulb icon"></i>
+                          <h3>Smart Suggestions</h3>
+                          <p>Get real-time hints while you type, helping you understand syntax easily.</p>
+                      </div>
+                      <div class="feature-card">
+                          <i class="ph ph-wrench icon"></i>
+                          <h3>Code Helper</h3>
+                          <p>Automatically fix common errors in Java,Python,C++ and JavaScript with one click.</p>
+                      </div>
+                      <div class="feature-card">
+                          <i class="ph ph-bug icon"></i>
+                          <h3>Auto Bug Detection</h3>
+                          <p>Find logic errors and security gaps before you submit your project.</p>
+                      </div>
+                      <div class="feature-card">
+                          <i class="ph ph-magic-wand icon"></i>
+                          <h3>Expert Refactoring</h3>
+                          <p>AI optimizes your code structure to make it look like a pro wrote it.</p>
+                      </div>
+                      <div class="feature-card">
+                          <i class="ph ph-users-three icon"></i>
+                          <h3>Live Collaboration</h3>
+                          <p>Invite team members to code on the same file in real-time, just like Google Docs.</p>
+                      </div>
+                  </div>
+              </div>
+              <button class="slider-btn next" onclick="moveSlide(1)"><i class="ph ph-caret-right"></i></button>
+          </div>
+          <div class="slider-dots" id="dotsContainer"></div>
+      </div>
+  </section>
+
+  <!-- 2. QODER-STYLE HIGHLIGHT SECTION (The "Green Box" Look) -->
+  <section class="highlight-section">
+      <div class="container grid-2">
+          <div class="highlight-text">
+              <span class="badge-green">NEW</span>
+              <h2 class="green-title">Programming Through Conversation</h2>
+              <p>Powered by an enhanced context engine, our agents learn from your codebase to autonomously plan and edit your entire project based on simple prompts.</p>
+              <button class="btn-primary" onclick="checkAccess('Quest Mode')">Try Quest Mode <i class="ph ph-arrow-right"></i></button>
+          </div>
+          <div class="highlight-image">
+               <div class="code-window">
+                  <div class="dots"><span></span><span></span><span></span></div>
+                  <pre><code><span class="c-1">// AI Agent is refactoring...</span>
+<span class="c-2">function</span> <span class="c-3">optimizeData</span>() {
+<span class="c-2">return</span> AI.refactor(currentCode);
+}</code></pre>
+              </div>
+          </div>
+      </div>
+    </section>
+   
+<!-- PROFESSIONAL COMMUNITY SEPARATION -->
+<section class="community-section" id="community">
+  <div class="container">
+      <div class="community-wrapper">
+          <div class="community-content">
+              <span class="badge-glow">COMMUNITY</span>
+              <!-- Your Original Content Below -->
+              <h2>Join 5,000+ students building the future.</h2>
+              <p>Stop struggling with bugs. Start building world-class software today.</p>
+              <button class="btn-primary" onclick="openModal('signup')">Create Free Account</button>
+          </div>
+      </div>
+  </div>
+</section>
+    <!-- 3. FAQ Section (Now with 3 Items) -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-card">
+                    <div class="faq-header" onclick="toggleFaq(this)"><span>What is CodeMind AI?</span><div class="plus-btn"><i class="ph ph-plus"></i></div></div>
+                    <div class="faq-body"><p>An intelligent editor designed for BCA/B.Tech students to help build and debug projects easily.</p></div>
+                </div>
+                <div class="faq-card">
+                    <div class="faq-header" onclick="toggleFaq(this)"><span>Which languages are supported?</span><div class="plus-btn"><i class="ph ph-plus"></i></div></div>
+                    <div class="faq-body"><p>We currently support JavaScript, Python, Java, and C++ with advanced AI analysis for each.</p></div>
+                </div>
+                <div class="faq-card">
+                    <div class="faq-header" onclick="toggleFaq(this)"><span>Can I export my project?</span><div class="plus-btn"><i class="ph ph-plus"></i></div></div>
+                    <div class="faq-body"><p>Yes! You can download your entire project folder as a ZIP file ready for deployment.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+   
+<!-- ADD THIS JUST ABOVE THE <footer> TAG -->
+    <section id="doc-viewer-section" class="doc-viewer" style="display:none;">
+        <div class="container-narrow">
+            <!-- One clear header with ONE back button -->
+            <div class="doc-header-pro">
+                <button class="minimal-back-btn" onclick="exitDocView()">
+                    <i class="ph ph-arrow-left"></i> Home
+                </button>
+                <div class="doc-metadata">
+                    <h1 id="doc-view-title">Privacy Policy</h1>
+                    <span id="doc-last-updated">Last Updated: April 2026</span>
+                </div>
+            </div>
+    
+            <!-- The Content Area -->
+            <div id="doc-view-content" class="doc-body-clean">
+                <!-- Content from files will be injected here -->
+            </div>
+        </div>
+    </section>
+
+<!-- Footer: ALL LINKS RESOLVED -->
+<footer class="main-footer">
+    <div class="container footer-grid">
+        <div class="footer-col brand">
+            <div class="logo"><i class="ph ph-code-block"></i> CodeMind</div>
+            <p>Building the future of student coding, one project at a time.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Products</h4>
+            <ul>
+                <!-- Redirects to Auth Wall -->
+                <li><a href="javascript:void(0)" onclick="checkAccess('AI Editor')">AI Editor</a></li>
+                <li><a href="javascript:void(0)" onclick="checkAccess('Templates')">Project Templates</a></li>
+                 <li><a href="javascript:void(0)"onclick="switchView('playground',this)">Frontend Lab(Free Access)</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Resources</h4>
+            <ul>
+               
+                <li><a href="javascript:void(0)" onclick="enterDocView('docs.html', 'Documentation')">Docs</a></li>
+<li><a href="javascript:void(0)" onclick="enterDocView('help.html', 'Help Center')">Help Center</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Support</h4>
+            <ul>
+                <!--<li><a href="privacy.html" target="_blank">Privacy</a></li>
+                <li><a href="terms.html" target="_blank">Terms</a></li>-->
+                <li><a href="javascript:void(0)" onclick="enterDocView('privacy.html', 'Privacy Policy')">Privacy</a></li>
+<li><a href="javascript:void(0)" onclick="enterDocView('terms.html', 'Terms of Service')">Terms</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 BCA Final Year Project - Group 3</p>
+    </div>
+</footer>
+
+<!-- Auth Modals -->
+<div class="modal-overlay" id="authModal">
+    <div class="modal-box">
+        <span class="close-x" onclick="closeModal()">&times;</span>
+        
+        <div id="loginView" class="auth-view">
+            <h2>Login</h2>
+            <input type="email" placeholder="Email Address" id="loginEmail">
+            <input type="password" placeholder="Password" id="loginPass">
+            <p class="link-text" onclick="showView('forgot')">Forgot Password?</p>
+            <!--<button class="btn-primary full" onclick="handleAuth('Logged in successfully!')">Login</button>-->
+             <button class="btn-primary full" onclick="handleLogin()">Login</button>
+            <p class="switch-text">New here? <span onclick="showView('signup')">Create Account</span></p>
+        </div>
+
+        <div id="signupView" class="auth-view" style="display:none;">
+            <h2>Sign Up</h2>
+            <!-- Added ID for dynamic name capture -->
+            <input type="text" placeholder="Full Name"    id="signupName">
+                <input type="email" placeholder="Email Address"  id="signupEmail">
+                <input type="password" placeholder="Password"  id="signupPass">
+                <!--<button class="btn-primary full" onclick="handleAuth('Account created!')">Create Account</button>-->
+<button class="btn-primary full" onclick="handleSignup()">Create Account</button>
+
+                <p class="switch-text">Already have an account? <span onclick="showView('login')">Login</span></p>
+            </div>
+
+            <!-- Forgot & OTP views remain same as your code -->
+            <div id="forgotView" class="auth-view" style="display:none;">
+                <h2>Reset Password</h2>
+                <input type="email" id="forgotEmail" placeholder="Enter Email">
+                <button class="btn-primary full" onclick="sendOTP()">Send OTP</button>
+                <p class="link-text" onclick="showView('login')">Back to login</p>
+            </div>
+            <div id="otpView" class="auth-view" style="display:none;">
+                <h2>Verify OTP</h2>
+                <input type="text"id="otpInput" maxlength="6" class="otp-field" placeholder="000000">
+                <div class="timer-area">
+                    <div id="timerContainer">Resend in: <span id="timer">00:30</span></div>
+                    <div id="resendContainer" style="display:none;">
+                        Didn't get it? <span class="resend-link" onclick="sendOTP()">Resend OTP</span>
+                    </div>
+                </div>
+                <button class="btn-primary full" onclick="verifyOTP()">Verify</button>
+            </div>
+            <!-- 5. RESET PASSWORD VIEW -->
+<div id="resetPasswordView" class="auth-view" style="display:none;">
+    <h2>Create New Password</h2>
+    <p style="font-size: 0.8rem; color: #777;">Resetting password for: <span id="displayResetEmail" style="color:var(--accent)"></span></p>
+    
+    <input type="password" id="newPassInput" placeholder="New Password (5+ chars, 1 Upper)">
+    <input type="password" id="confirmPassInput" placeholder="Confirm New Password">
+    
+    <button class="btn-primary full" onclick="handlePasswordUpdate()">Update Password</button>
+    <p class="link-text" onclick="showView('login')">Back to login</p>
+</div>
+        </div>
+    </div>
+<!-- Back to Top Button -->
+<button id="backToTop" class="back-to-top" title="Go to top">
+    <i class="ph ph-arrow-up"></i>
+</button>
+
+    <script src="main.js"></script>
+</body>
+</html>

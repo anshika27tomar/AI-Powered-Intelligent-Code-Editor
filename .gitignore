@@ -1,0 +1,40 @@
+# Java
+*.class
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# Build
+build/
+target/
+out/
+
+# Database / secrets
+db.properties
+config.properties
+application.properties
+
+# Logs
+*.log
+
+# Libraries (important)
+lib/
+mysql-connector*.jar
+
+# OS files
+.DS_Store
+# Maven
+target/
+lib/
+# VS Code
+.vscode/
+
+# External runtime files
+*.bat
+*.cmd
+*.zip.zip
+
+# Secrets (important for you)
+*.properties

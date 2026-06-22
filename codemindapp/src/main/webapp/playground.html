@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="playground.css">
+    <script src="https://unpkg.com/monaco-editor@0.45.0/min/vs/loader.js"></script>
+</head>
+
+
+<body class="app">
+
+    <div class="sidebar">
+        <div class="logo">
+            ⚡ AI EDITOR
+        </div>
+
+        <div class="file-explorer">
+            <h4>📂 Files</h4>
+            <ul id="fileList"></ul>
+            <button onclick="newFile()">+ New File</button>
+        </div>
+
+        <button onclick="show('editor')">💻 Editor</button>
+        <button onclick="show('ai')">🤖 AI</button>
+        <button onclick="parent.exitFrontendLab()">🚪 Logout</button>
+
+    </div>
+
+    <div class="main">
+       <div id="editor-section">
+
+            <div class="topbar">
+                <select id="lang" onchange="changeLang()" class="lang-select">
+                    <option value="html">🌐 HTML</option>
+                    <option value="css">🎨 CSS</option>
+                    <option value="javascript">⚡ JavaScript</option>
+                </select>
+                <button onclick="toggleTheme()">🌙 Theme</button>
+                <button id="toggleBtn" onclick="toggleOutput()">Hide Output</button>
+                <button class="primary" onclick="run()">Run</button>
+                <button onclick="analyze()">Analyze</button>
+                <button onclick="toggleAutoSave()" id="autoSaveBtn">
+                    💾 Auto Save: ON
+                </button>
+
+                <button onclick="toggleLive()" id="liveBtn">
+                    ⚡ Live Preview: OFF
+                </button>
+                <button onclick="deleteFile()">🗑️ Delete</button>
+            </div>
+
+
+            <!-- 🔥 MAIN LAYOUT -->
+            <div class="editor-layout">
+
+                <!-- EDITOR -->
+                <div class="editor">
+
+                    <div class="tabs">
+                        <button onclick="switchFile('playground.html')">index.html</button>
+                        <button onclick="switchFile('playground.css')">style.css</button>
+                        <button onclick="switchFile('playground.js')">script.js</button>
+                        <button onclick="newFile()">＋</button>
+                    </div>
+
+                    <div id="editor"></div>
+
+                    <div class="editor-footer">
+                        <span id="lines">Lines: 0</span>
+                        <span id="errors">Errors: 0</span>
+                    </div>
+
+                </div>
+
+                <!-- OUTPUT -->
+                <div class="output">
+                    <div class="output-header">
+                        🌐 Live Preview
+                    </div>
+                    <iframe id="out"></iframe>
+                </div>
+
+                <!-- ERROR PANEL -->
+                <div class="error-panel">
+                    <h3 class="error-title">⚠️ Issues</h3>
+                    <ul id="errorList"></ul>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="ai-section" style="display:none; padding:20px;">
+            <button onclick="generate()">Generate Code</button>
+        </div>
+
+        <div class="status">Ready</div>
+
+    </div>
+
+    <script src="playground.js"></script>
+
+    <script>
+        let editor;
+
+        require.config({paths: {vs: 'https://unpkg.com/monaco-editor@0.45.0/min/vs'}});
+
+        require(['vs/editor/editor.main'], function () {
+
+            editor = monaco.editor.create(document.getElementById('editor'), {
+                value: `<!DOCTYPE html>
+<html>
+<body>
+<h1>Hello 🚀</h1>
+</body>
+</html>`,
+                language: 'html',
+                theme: 'vs-dark',
+                automaticLayout: true
+            });
+            editor.onDidChangeModelContent(() => {
+
+                updateFooter([]);
+
+                // ✅ AUTO SAVE
+                if (autoSaveEnabled) {
+                    saveFile();
+                }
+
+                // ✅ LIVE PREVIEW
+                if (livePreviewEnabled) {
+                    run();
+                }
+
+            });
+
+
+        });
+    </script>
+
+</body>
+

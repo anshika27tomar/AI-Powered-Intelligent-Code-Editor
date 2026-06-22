@@ -1,0 +1,464 @@
+/* APP FONT */
+body {
+    font-family: "Poppins", "Segoe UI", "Segoe UI Emoji", "Apple Color Emoji", sans-serif;  background-color:#000000;
+}
+
+
+/* ENTRY */
+.center {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   background: linear-gradient(135deg, #000000, #2ecc71, #2ecc75);
+    
+    color: white;
+}
+
+.card {
+    background:#000000;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.card button {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    background: #000000;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+}
+/* APP */
+.app {
+    display: flex;
+    height: 100vh;
+    background: #000000;
+    color: white;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 200px;
+    background: #000000;
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: #000000;
+    border: none;
+    color: #e5e7eb;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.sidebar button span {
+    font-size: 16px;
+}
+
+.sidebar button:hover {
+    background: #2ecc71;
+    transform: translateX(5px);
+}
+
+/* MAIN */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TOPBAR */
+.topbar {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    background: #000000;
+}
+
+.topbar button,
+.lang-select {
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.primary {
+    background: #2ecc71;
+    color: #000000;
+}
+
+/* LAYOUT */
+.editor-layout {
+    flex: 1;
+    display: flex;
+    height: calc(100vh - 100px);
+}
+
+/* LIGHT THEME */
+.light {
+    background: #f1f5f9;
+    color: #000000;
+}
+
+.light .sidebar {
+    background: #e2e8f0;
+}
+
+.light .file-explorer {
+    background: #e2e8f0;
+}
+
+.light .editor {
+    background: #ffffff;
+}
+
+.light .tabs {
+    background: #cbd5e1;
+}
+
+.light .output {
+    background: #ffffff;
+}
+
+.light .error-panel {
+    background: #f8fafc;
+    color: #000000;
+}
+
+/* SMOOTH TRANSITION */
+body,
+.sidebar,
+.editor,
+.tabs,
+.output,
+.error-panel {
+    transition: 0.3s;
+}
+
+/* EDITOR */
+.editor {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+#editor {
+    flex: 1;
+    /* 🔥 THIS IS MUST */
+    height: 100%;
+
+    background: #2ecc71;
+}
+
+
+/* 🚫 DON'T OVERRIDE MONACO */
+#editor * {
+    font-family: unset !important;
+}
+
+.sidebar button {
+    font-family: "Poppins", "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+}
+
+.editor-layout {
+    gap: 10px;
+    padding: 10px;
+}
+
+
+/* FOOTER */
+.editor-footer {
+    height: 28px;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-size: 12px;
+    align-items: center;
+}
+
+/* OUTPUT */
+.output {
+    width: 25%;
+    border-left: 1px solid #333;
+}
+
+.output iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: white;
+    border-radius: 10px;
+}
+
+/* ERROR PANEL */
+.error-title {
+    font-size: 13px;
+    color: #f87171;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+    letter-spacing: 0.5px;
+}
+
+.error-panel {
+    width: 22%;
+}
+
+.card {
+    box-shadow: #000000;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+#errorList li {
+    font-size: 12px;
+    padding: 6px;
+    border-bottom: 1px solid #222;
+    cursor: pointer;
+    color: #ff6b6b;
+}
+
+#errorList li span {
+    display: block;
+    color: #aaa;
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+#errorList li:hover {
+    background: #111827;
+}
+/* STATUS */
+.status {
+    height: 25px;
+    background: #000000;
+    padding: 5px;
+    font-size: 12px;
+}
+
+/* HIDE OUTPUT */
+.hide-output .output {
+    display: none;
+}
+
+/* EXPAND EDITOR */
+.hide-output .editor {
+    width: 85%;
+}
+
+/* EXPAND ERROR PANEL */
+.hide-output .error-panel {
+    width: 15%;
+}
+
+.tabs {
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    background: #000000;
+}
+
+.tabs button {
+    padding: 6px 10px;
+    background: #000000;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.tabs button:hover {
+    background: #2ecc71;
+}
+
+/* FILE EXPLORER */
+.file-explorer {
+    width: 180px;
+    background: #000000;
+    padding: 10px;
+    border-right: 1px solid #333;
+}
+
+.file-explorer h4 {
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: #aaa;
+}
+
+.file-explorer ul {
+    list-style: none;
+}
+
+.file-explorer li {
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+.file-explorer li:hover {
+    background: #2ecc71;
+}
+
+.file-explorer button {
+    margin-top: 10px;
+    width: 100%;
+    padding: 6px;
+    background: #000000;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.file-explorer li.active {
+    background: #2ecc71;
+    color: black;
+    font-weight: 500;
+}
+
+.file-explorer li:hover {
+    background: #2ecc71;
+    transform: translateX(4px);
+    transition: 0.2s;
+}
+
+/* DEPTH */
+.editor,
+.sidebar,
+.output,
+.error-panel {
+    box-shadow: #000000;
+}
+
+/* LANGUAGE DROPDOWN */
+.lang-select {
+    background: #000000;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.2s;
+}
+
+.lang-select:hover {
+    background: #000000;
+}
+
+/* TOPBAR */
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: #000000;
+    border-bottom: 1px solid #222;
+}
+
+/* BUTTONS */
+.topbar button {
+    background: #000000;
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 13px;
+}
+
+.topbar button:hover {
+    background: #000000;
+    transform: translateY(-1px);
+}
+
+/* PRIMARY */
+.primary {
+    background: #2ecc71 !important;
+    color: #000000 !important;
+    font-weight: 600;
+}
+
+/* TABS */
+.tabs {
+    display: flex;
+    gap: 6px;
+    padding: 8px;
+    background: #000000;
+    border-bottom: 1px solid #2ecc75;
+}
+
+.tabs button {
+    background: #000000;
+    border: none;
+    color: #cbd5e1;
+    padding: 7px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.2s;
+}
+
+.tabs button:hover {
+    background: #2ecc71;
+}
+
+/* ACTIVE FILE */
+.file-explorer li.active {
+    background: #2ecc71;
+    color: #000000;
+    font-weight: 600;
+}
+
+.editor,
+.output,
+.error-panel {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tabs button.active {
+    background: #2ecc71;
+    color: #000000;
+    box-shadow: 0 0 10px #2ecc71;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2ecc71;
+    padding: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.output-header {
+    padding: 10px;
+    background: #000000;
+    border-bottom: 1px solid #333;
+    font-size: 13px;
+    color: #aaa;
+}  
